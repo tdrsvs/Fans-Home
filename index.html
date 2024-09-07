@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ديار المعجبين الصفحة الرئيسية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #1c1c1c;
+            color: #f4f4f4;
+            direction: rtl;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-light {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .header .icon {
+            font-size: 24px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .header .icon:hover {
+            color: #ffd700;
+        }
+
+        .movie-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffd700;
+        }
+
+        .theme-light .section-title {
+            color: #333;
+        }
+
+        .movie-container {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #ffd700 transparent;
+        }
+
+        .theme-light .movie-container {
+            scrollbar-color: #333 transparent;
+        }
+
+        .movie-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .movie-container::-webkit-scrollbar-thumb {
+            background-color: #ffd700;
+            border-radius: 10px;
+        }
+
+        .theme-light .movie-container::-webkit-scrollbar-thumb {
+            background-color: #333;
+        }
+
+        .movie-item {
+            background-color: #292929;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 250px;
+            min-width: 250px;
+            margin: 0 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .theme-light .movie-item {
+            background-color: #f4f4f4;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .movie-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-light .movie-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .movie-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 3px solid #ffd700;
+        }
+
+        .theme-light .movie-image {
+            border-bottom: 3px solid #333;
+        }
+
+        .movie-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .movie-header h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #ffd700;
+        }
+
+        .theme-light .movie-header h2 {
+            color: #333;
+        }
+
+        .movie-header .options,
+        .movie-header .favorite {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .favorite {
+            color: #ffd700;
+            margin-left: 10px;
+        }
+
+        .favorite.active {
+            color: red;
+        }
+
+        .theme-light .favorite {
+            color: #333;
+        }
+
+        .theme-light .favorite.active {
+            color: red;
+        }
+
+        .movie-popup,
+        .favorite-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .movie-popup-content,
+        .favorite-popup-content {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 80%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            color: #ffd700;
+            overflow-y: auto;
+            max-height: 80%;
+        }
+
+        .theme-light .movie-popup-content,
+        .theme-light .favorite-popup-content {
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .close-btn:hover {
+            color: red;
+        }
+
+        #popupTitle,
+        #favoritePopupTitle {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        #popupStory, #popupYear, #popupRating {
+            margin: 5px 0;
+        }
+
+        .favorite-movie {
+            background: #292929;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .theme-light .favorite-movie {
+            background: #f4f4f4;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .favorite-movie img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .favorite-movie h3 {
+            margin: 10px 0 10px;
+            font-size: 20px;
+            color: #ffd700;
+        }
+
+        .theme-light .favorite-movie h3 {
+            color: #333;
+        }
+
+        .remove-favorite {
+            cursor: pointer;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+  
+    <i class="fa fa-edit icon" onclick="window.location.href='https://fanshome0.github.io/Favorite-/';" title=""></i>
+  
+   <i class="fa fa-newspaper icon" onclick="window.location.href='https://fanshome0.github.io/Cartoon-news-/';" title=""></i>
+    <i class="fa fa-heart icon" id="showFavorites" title=""></i>
+
+ 
+ 
+ 
+ 
+ 
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .notification-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            display: none; /* Initially hidden */
+        }
+
+        .notification-popup {
+            display: none;
+            position: fixed; /* Center in the middle of the page */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: #e6b800;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            text-align: center;
+            color: black;
+        }
+
+        .notification-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background: #e6b800;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item button {
+            background-color: #e6b800;
+            color: blue;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .notification-item button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Overlay for popup */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-container">
+        <i class="fa fa-bell icon" id="notification-icon" onclick="toggleNotificationPopup()"></i>
+        <div class="notification-badge" id="notification-badge"></div>
+        <div class="overlay" id="overlay" onclick="closeNotificationPopup()"></div>
+        <div class="notification-popup" id="notification-popup">
+            <div class="notification-item">
+                <p id="notification-title">
+                  في التحديث القادم سيتم إضافة العديد من الميزات الجديدة، مثل مجموعة أكبر من الكرتونات التي يمكن استكشافها، بالإضافة إلى ميزة البحث المتقدمة التي تتيح للمستخدمين العثور بسهولة على الكرتونات المفضلة لديهم. سيتم أيضًا تحسين ديار المعجبين ليكون أكثر أناقة وجاذبية، مع تحديثات شاملة لتقديم تجربة أفضل وأكثر تفاعلية للمستخدمين.
+</p>
+                <button onclick="markAsRead()">تعيين كمقروءة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const notificationTitleKey = 'notificationTitle';
+        const notificationPopup = document.getElementById('notification-popup');
+        const notificationBadge = document.getElementById('notification-badge');
+        const overlay = document.getElementById('overlay');
+        const notificationTitleElem = document.getElementById('notification-title');
+
+        // Function to toggle the visibility of the notification popup
+        function toggleNotificationPopup() {
+            if (notificationPopup.style.display === 'none' || notificationPopup.style.display === '') {
+                notificationPopup.style.display = 'block';
+                overlay.style.display = 'block';
+                if (hasNewNotifications()) {
+                    notificationBadge.style.display = 'none';
+                }
+            } else {
+                notificationPopup.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        }
+
+        // Function to close the notification popup
+        function closeNotificationPopup() {
+            notificationPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Function to mark notifications as read and hide the badge
+        function markAsRead() {
+            const currentNotificationTitle = notificationTitleElem.innerText;
+            localStorage.setItem(notificationTitleKey, currentNotificationTitle);
+            notificationBadge.style.display = 'none';
+        }
+
+        // Function to check if there are new notifications
+        function hasNewNotifications() {
+            const currentNotificationTitle = 'في التحديث القادم سيتم إضافة العديد من الميزات الجديدة، مثل مجموعة أكبر من الكرتونات التي يمكن استكشافها، بالإضافة إلى ميزة البحث المتقدمة التي تتيح للمستخدمين العثور بسهولة على الكرتونات المفضلة لديهم. سيتم أيضًا تحسين ديار المعجبين ليكون أكثر أناقة وجاذبية، مع تحديثات شاملة لتقديم تجربة أفضل وأكثر تفاعلية للمستخدمين.'; // Replace with actual logic
+            const storedNotificationTitle = localStorage.getItem(notificationTitleKey);
+            return !storedNotificationTitle || storedNotificationTitle !== currentNotificationTitle;
+        }
+
+        // Initialize the badge display based on the presence of new notifications
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentNotificationTitle = 'في التحديث القادم سيتم إضافة العديد من الميزات الجديدة، مثل مجموعة أكبر من الكرتونات التي يمكن استكشافها، بالإضافة إلى ميزة البحث المتقدمة التي تتيح للمستخدمين العثور بسهولة على الكرتونات المفضلة لديهم. سيتم أيضًا تحسين ديار المعجبين ليكون أكثر أناقة وجاذبية، مع تحديثات شاملة لتقديم تجربة أفضل وأكثر تفاعلية للمستخدمين.'; // Replace with actual logic
+            if (hasNewNotifications()) {
+                notificationBadge.style.display = 'block';
+            }
+            notificationTitleElem.innerText = currentNotificationTitle;
+        });
+    </script>
+</body>
+</html>
+
+ 
+ 
+
+</div>
+
+<!-- أفلام الصف الأول -->
+<div class="movie-section">
+    <h2 class="section-title">| يُعرض حاليا </h2>
+    <div class="movie-container">
+        <div class="movie-item" data-story="تتحول مارينيت وأدريان، وهما مراهقان عاديان، إلى الأبطال الخارقين ليدي باغ والقطة السوداء عندما يهدد الشر الغامض بتدمير باريس من هنا تبدء قصة احداث مسلسل مليئ بالإثارة والمغامرة" data-year="2015" data-rating="★★★★☆">
+            <img src="https://s01.babup.com/uploads/MV5BMDhkYmNjMTUtNmJhZC00NDVmLTljMGYtMmY5MWFiZDVjNDc0XkEyXkFqcGdeQXVyNjc0MjcxMDk-V1-UY1200-_9e588.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2>  Miraculous  </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                   onclick="window.open('https://fanshome0.github.io/Miraculous/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="movie-item" data-story="يتناول الفيلم حول فأر يستطيع الطبخ بشكل رائع يعقد تحالفًا غير عادي مع عامل مطبخ شاب في مطعم باريسي شهير" data-year="2007 " data-rating="★★★☆☆">
+            <img src="https://s01.babup.com/uploads/p-ratatouille-19736-0814231f-1-_a614a.jpeg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2> Ratatouille </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                       onclick="window.open('https://fanshome0.github.io/Ratatouille/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+               </div>
+            
+            
+            
+            
+            
+              <div class="movie-item" data-story="يقضي الشقيقان التوأم ديبر ومابل باينز الصيف في منتجع سياحي يملكه عمهما الأكبر في منطقة جرافيتي فولز الغامضة في ولاية أوريغون." data-year="2012" data-rating="★★★★☆">
+            <img src="https://s01.babup.com/uploads/MV5BMTEzNDc3MDQ2NzNeQTJeQWpwZ15BbWU4MDYzMzUwMDIx-V1-FMjpg-UX1000-_b9fc4.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2>  Gravity Falls </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                        onclick="window.open('https://fanshome0.github.io/Gravity-Falls/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+               </div>
+               
+               
+               
+         
+               
+               
+               
+               
+               
+               
+               
+        </div>
+    </div>
+</div>
+
+<!-- أفلام الصف الثاني -->
+
+
+
+
+
+
+<div class="movie-section">
+    <h2 class="section-title">| كرتون رائج  </h2>
+    <div class="movie-container">
+   <div class="movie-item" data-story="في مغامرة مثيرة، يكتشف فتى صغير جهازًا غير عادي يتيح له التحول إلى كائنات متنوعة ذات قدرات فريدة. بمساعدة أفراد عائلته، يتنقل عبر تحديات ومهام معقدة، مستخدمًا قدراته لمواجهة التهديدات وإنقاذ العالم من المخاطر. كل حلقة تكشف عن جانب جديد من قدراته ومهامه، مما يجعله يخوض مغامرات مليئة بالإثارة والتشويق." data-year="2005" data-rating="★★★★☆">
+     <img src="https://m.media-amazon.com/images/M/MV5BZjg2ZjViMTktNWQ1Yy00ODZiLWE1OTgtNDY3MjI0OGUyNjNhXkEyXkFqcGdeQXVyNTk4NDI4NTE@._V1_.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2> بن 10 كلاسيك </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                        onclick="window.open('https://tdrsvs.github.io/ben-10-classic-/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+           </div>
+        
+         
+           
+               
+                 <div class="movie-item" data-story="يواجه صبي ذو خيال نشط مخاوفه في رحلة لا تُنسى عبر الليل مع صديقه الجديد وهو مخلوق عملاق مبتسم يُدعى دارك" data-year="2024" data-rating="★★★☆☆">
+            <img src="https://s01.babup.com/uploads/Orion-and-the-Dark_87e09.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2>  Orion and the Dark </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                        onclick="window.open('https://tdrsvs.github.io/Orion-and-Dark/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>   </div>
+               
+            
+        
+     
+     
+     
+     
+     
+     
+        
+        
+        
+    </div>
+</div>
+
+<div class="movie-popup" id="moviePopup">
+    <div class="movie-popup-content">
+        <span class="close-btn" id="closePopup">×</span>
+        <h2 id="popupTitle"></h2>
+        <p id="popupStory"></p>
+        <p id="popupYear"></p>
+        <p id="popupRating"></p>
+    </div>
+</div>
+
+<div class="favorite-popup" id="favoritePopup">
+    <div class="favorite-popup-content">
+        <span class="close-btn" id="closeFavoritePopup">×</span>
+        <h2 id="favoritePopupTitle">مفضلتي</h2>
+        <div id="favoriteMoviesContainer"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const favoriteIcons = document.querySelectorAll('.favorite');
+        const favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
+
+        favoriteIcons.forEach(icon => {
+            icon.addEventListener('click', function () {
+                const movieItem = this.closest('.movie-item');
+                const movieTitle = movieItem.querySelector('h2').textContent;
+
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    removeFavorite(movieTitle);
+                } else {
+                    this.classList.add('active');
+                    addFavorite(movieItem);
+                }
+            });
+        });
+
+        function addFavorite(movieItem) {
+            const movieTitle = movieItem.querySelector('h2').textContent;
+            const movieImageSrc = movieItem.querySelector('img').src;
+            const movieStory = movieItem.dataset.story;
+            const movieYear = movieItem.dataset.year;
+            const movieRating = movieItem.dataset.rating;
+
+            const favoriteMovie = {
+                title: movieTitle,
+                image: movieImageSrc,
+                story: movieStory,
+                year: movieYear,
+                rating: movieRating
+            };
+
+            favoriteMovies.push(favoriteMovie);
+            localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+        }
+
+        function removeFavorite(title) {
+            const updatedFavorites = favoriteMovies.filter(movie => movie.title !== title);
+            localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
+            location.reload(); // تحديث الصفحة بعد الحذف
+        }
+
+        document.getElementById('showFavorites').addEventListener('click', function () {
+            const favoritePopup = document.getElementById('favoritePopup');
+            const favoriteMoviesContainer = document.getElementById('favoriteMoviesContainer');
+            favoriteMoviesContainer.innerHTML = '';
+
+            favoriteMovies.forEach(movie => {
+                const movieDiv = document.createElement('div');
+                movieDiv.classList.add('favorite-movie');
+                movieDiv.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title}">
+                    <h3>${movie.title}</h3>
+                    <p>${movie.story}</p>
+                    <p>${movie.year}</p>
+                    <p>${movie.rating}</p>
+                    <span class="remove-favorite" data-title="${movie.title}">إزالة من المفضلة</span>
+                `;
+                favoriteMoviesContainer.appendChild(movieDiv);
+            });
+
+            const removeFavoriteButtons = favoriteMoviesContainer.querySelectorAll('.remove-favorite');
+            removeFavoriteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const title = this.dataset.title;
+                    removeFavorite(title);
+                });
+            });
+
+            favoritePopup.style.display = 'flex';
+        });
+
+        document.getElementById('closeFavoritePopup').addEventListener('click', function () {
+            const favoritePopup = document.getElementById('favoritePopup');
+            favoritePopup.style.display = 'none';
+        });
+
+        favoriteMovies.forEach(favMovie => {
+            const movieItems = document.querySelectorAll('.movie-item');
+            movieItems.forEach(item => {
+                const title = item.querySelector('h2').textContent;
+                if (title === favMovie.title) {
+                    item.querySelector('.favorite').classList.add('active');
+                }
+            });
+        });
+
+        const movieItems = document.querySelectorAll('.movie-item');
+        movieItems.forEach(item => {
+            item.addEventListener('click', function (event) {
+                if (!event.target.classList.contains('favorite')) {
+                    showPopup(this);
+                }
+            });
+        });
+
+        document.getElementById('closePopup').addEventListener('click', function () {
+            const moviePopup = document.getElementById('moviePopup');
+            moviePopup.style.display = 'none';
+        });
+
+        function showPopup(movieItem) {
+            const moviePopup = document.getElementById('moviePopup');
+            const title = movieItem.querySelector('h2').textContent;
+            const story = movieItem.dataset.story;
+            const year = movieItem.dataset.year;
+            const rating = movieItem.dataset.rating;
+
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupStory').textContent = story;
+            document.getElementById('popupYear').textContent = `• تم العرض الأول في  ${year}`;
+            document.getElementById('popupRating').textContent = ` • تقييم العرض  ${rating}`;
+
+            moviePopup.style.display = 'flex';
+        }
+
+        document.getElementById('toggleTheme').addEventListener('click', function () {
+            document.body.classList.toggle('theme-light');
+        });
+    });
+</script>
+    <script>
+
+      function checkInternetConnection() {
+
+    if (!navigator.onLine) {
+        document.body.classList.add('offline');
+        document.body.innerHTML = '<p> ليس لديك اتصال إنترنت</p>';
+        document.body.style.backgroundColor = 'black';
+        document.body.style.color = 'white';
+        document.body.style.display = 'flex';
+        document.body.style.justifyContent = 'center';
+        document.body.style.alignItems = 'center';
+        document.body.style.height = '100vh';
+        document.body.style.margin = '0';
+        document.body.style.fontSize = '24px';
+    }
+}
+
+window.addEventListener('online', checkInternetConnection);
+window.addEventListener('offline', checkInternetConnection);
+
+// فحص الاتصال بشكل دوري
+setInterval(checkInternetConnection, 3000);
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
