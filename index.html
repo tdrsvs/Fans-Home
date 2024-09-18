@@ -357,7 +357,7 @@
         <div class="notification-popup" id="notification-popup">
             <div class="notification-item">
                 <p id="notification-title">
-           تمت إضافة ميزة جديدة وهيَ البحث عن الكرتون إذا لم تجد الكرتون في الصفحة الرئيسية، يمكنك بكل سهولة استخدام قسم البحث الجديد للعثور عليه. هذه الميزة تجعل الوصول إلى أي كرتون أسرع وأسهل
+           إطلع على قسم الجديد قسم السلاسل يعرض لك فرصة مشاهدة السلاسل المهمة من عالم الكرتون 
 </p>
                 <button onclick="markAsRead()">تعيين كمقروءة</button>
             </div>
@@ -400,14 +400,14 @@
 
         // Function to check if there are new notifications
         function hasNewNotifications() {
-            const currentNotificationTitle = 'تمت إضافة ميزة جديدة وهيَ البحث عن الكرتون إذا لم تجد الكرتون في الصفحة الرئيسية، يمكنك بكل سهولة استخدام قسم البحث الجديد للعثور عليه. هذه الميزة تجعل الوصول إلى أي كرتون أسرع وأسهل'; // Replace with actual logic
+            const currentNotificationTitle = 'إطلع على قسم الجديد قسم السلاسل يعرض لك فرصة مشاهدة السلاسل المهمة من عالم الكرتون '; // Replace with actual logic
             const storedNotificationTitle = localStorage.getItem(notificationTitleKey);
             return !storedNotificationTitle || storedNotificationTitle !== currentNotificationTitle;
         }
 
         // Initialize the badge display based on the presence of new notifications
         document.addEventListener('DOMContentLoaded', () => {
-            const currentNotificationTitle = 'تمت إضافة ميزة جديدة وهيَ البحث عن الكرتون إذا لم تجد الكرتون في الصفحة الرئيسية، يمكنك بكل سهولة استخدام قسم البحث الجديد للعثور عليه. هذه الميزة تجعل الوصول إلى أي كرتون أسرع وأسهل'; // Replace with actual logic
+            const currentNotificationTitle = 'إطلع على قسم الجديد قسم السلاسل يعرض لك فرصة مشاهدة السلاسل المهمة من عالم الكرتون '; // Replace with actual logic
             if (hasNewNotifications()) {
                 notificationBadge.style.display = 'block';
             }
@@ -529,6 +529,9 @@
   </h2>
     <div class="movie-container">
 
+          
+         
+        
            
         
            <div class="movie-item" data-story=" تواجه (مافكا) -روح الغابة- خيارًا مستحيلًا بين الحب وواجبها في حماية قلب الغابة، عندما تقع (مافكا) في الحب مع الموسيقي (لوكاش)، وتتناول الأحداث القوة السحرية للحب، والتي تمكن الطبيعة البشرية من التغاضي عن الشر ومواجهته
@@ -616,6 +619,69 @@
 
 
 
+
+
+
+<div class="movie-section">
+    <h2 class="section-title">| السلاسل  </h2>
+    <div class="movie-container">
+
+      
+        
+          
+          
+                <div class="movie-item" data-story=" هيكاب، شاب فايكنج طموح يعيش في مجتمع يقدّر القوة والشجاعة، يجد نفسه في مواجهة أعظم تحدٍ في حياته: إثبات قدراته كصياد تنانين. عندما يواجه مخلوقًا أسطوريًا يُرعب الجميع، يُفاجأ بحقيقة تغير كل شيء. بدلاً من خوض معركة دامية، تنشأ بينهما علاقة غير متوقعة تقلب مفاهيمه عن القوة والشجاعة رأسًا على عقب
+" data-year="2010" data-rating="★★★★☆">
+     <img src="https://s01.babup.com/uploads/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw-V1-1-.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2> فرسان التنانين  </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                        onclick="window.open('https://tdrsvs.github.io/How-to-train-your-dragon/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+           </div>
+        
+         
+         
+          
+              <div class="movie-item" data-story=" قضت الأميرة ذات الشعر الطويل رابونزيل طوال حياتها في البرج، ولكن عندما تقع في حب أحد اللصوص، ويختفي تقرر الخروج إلى العالم الخارجي لأول مرة للعثور عليه
+" data-year="2010" data-rating="★★★★☆">
+     <img src="https://s01.babup.com/uploads/MV5BMTAxNDYxMjg0MjNeQTJeQWpwZ15BbWU3MDcyNTk2OTM-V1-FMjpg-UX1000-.jpg" alt="" class="movie-image">
+            <div class="movie-header">
+                <h2> Tangled  </h2>
+                <div>
+                  
+                    <i class="fa fa-heart favorite"></i>
+                    <div 
+                        onclick="window.open('https://tdrsvs.github.io/Tangled/', '_blank');"
+                        style="cursor: pointer; display: inline-block; text-decoration: none; color: inherit;"
+                    >
+                        <i class="fa fa-play watch" style="color: #ffd700;"></i>
+                    </div>
+                </div>
+            </div>
+           </div>
+         
+          
+          
+          
+         
+         
+         
+         
+    
+   
+   
+   
+    </div>
+</div>
 
 
 
